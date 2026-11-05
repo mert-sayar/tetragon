@@ -39,11 +39,11 @@ var (
 		Name:      "process_cache_capacity_evictions_total",
 		Help:      "Number of process cache capacity (implicit) LRU evictions.",
 	})
-	processCacheEarlyDeletions = prometheus.NewCounter(prometheus.CounterOpts{
-		Namespace: consts.MetricsNamespace,
-		Name:      "process_cache_early_deletions_total",
-		Help:      "Number of times the GC attempted to delete a process already marked as deleted. May indicate the GC is deleting processes too early.",
-	})
+	processCacheEarlyDeletions = metrics.MustNewCounter(metrics.NewOpts(
+		consts.MetricsNamespace, "", "process_cache_early_deletions_total",
+		"Number of times the GC attempted to delete a process already marked as deleted. May indicate the GC is deleting processes too early.",
+		nil, nil, nil,
+	), nil)
 	processCacheMisses = metrics.MustNewCounter(metrics.NewOpts(
 		consts.MetricsNamespace, "", "process_cache_misses_total",
 		"Number of process cache misses.",

@@ -133,6 +133,11 @@ func (m *GranularCounter[L]) Init() {
 	}
 }
 
+// Reset resets the underlying counter vector.
+func (m *GranularCounter[L]) Reset() {
+	m.metric.Reset()
+}
+
 // InitForDocs implements CollectorWithInit.
 func (m *GranularCounter[L]) InitForDocs() {
 	if m.initForDocs != nil {
@@ -202,6 +207,11 @@ func (m *Counter) IsConstrained() bool {
 // Init implements CollectorWithInit.
 func (m *Counter) Init() {
 	m.GranularCounter.Init()
+}
+
+// Reset resets the underlying counter vector.
+func (m *Counter) Reset() {
+	m.GranularCounter.Reset()
 }
 
 // InitForDocs implements CollectorWithInit.

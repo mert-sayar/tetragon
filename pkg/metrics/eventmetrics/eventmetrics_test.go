@@ -16,6 +16,8 @@ import (
 )
 
 func TestHandleProcessedEvent(t *testing.T) {
+	t.Cleanup(EventsProcessed.Reset)
+
 	require.NoError(t, testutil.CollectAndCompare(EventsProcessed, strings.NewReader("")))
 	handleProcessedEvent(nil, nil)
 	// empty process
@@ -95,6 +97,8 @@ tetragon_events_total{binary="binary_f",event_type="PROCESS_KPROBE",namespace=""
 }
 
 func TestHandleOriginalEvent(t *testing.T) {
+	t.Cleanup(FlagCount.Reset)
+
 	handleOriginalEvent(nil)
 	handleOriginalEvent(&processapi.MsgExecveEventUnix{})
 	require.NoError(t, testutil.CollectAndCompare(FlagCount, strings.NewReader("")))

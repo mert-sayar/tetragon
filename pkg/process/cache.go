@@ -105,7 +105,7 @@ func (pc *Cache) cacheGarbageCollector(ctx context.Context, intervalGC time.Dura
 				// the edge of the world. Hitting this could mean our
 				// GC logic deleted a process too early.
 				if p.getColor() == deleted {
-					processCacheEarlyDeletions.Inc()
+					processCacheEarlyDeletions.WithLabelValues().Inc()
 					continue
 				}
 				// duplicate deletes can happen, if they do reset

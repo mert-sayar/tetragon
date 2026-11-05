@@ -62,6 +62,8 @@ func TestProcessCache(t *testing.T) {
 }
 
 func TestProcessCacheGCEarlyDeletion(t *testing.T) {
+	t.Cleanup(processCacheEarlyDeletions.Reset)
+
 	synctest.Test(t, func(t *testing.T) {
 		cache, err := NewCache(t.Context(), 10, 10*time.Millisecond)
 		require.NoError(t, err)
@@ -139,6 +141,8 @@ func TestProcessCacheGCLeak(t *testing.T) {
 // read path used by dump). Before color was made atomic this test reports a data
 // race under -race. It must stay clean now that color uses atomic access.
 func TestProcessCacheColorDataRace(t *testing.T) {
+	t.Cleanup(processCacheEarlyDeletions.Reset)
+
 	interval := 1 * time.Millisecond
 	cache, err := NewCache(t.Context(), 100, interval)
 	require.NoError(t, err)
